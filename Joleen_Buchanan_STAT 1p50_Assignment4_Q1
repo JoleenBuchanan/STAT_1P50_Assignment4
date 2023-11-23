@@ -1,0 +1,32 @@
+#Question 1
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+
+# Read the dataset
+data = pd.read_csv('/home/jojo/Documents/dataset_assignment3/dataset_assignment3/kidney_disease.csv')
+
+
+X = data.drop(['ckd'], axis=1)
+y = data['ckd']
+
+# Train a Decision Tree Classifier
+model = DecisionTreeClassifier()
+model.fit(X, y)
+
+# Plot the decision tree
+fig = plt.figure(figsize=(40, 20))
+plot_tree(model, feature_names=X.columns, class_names=['0', '1'], filled=True)
+plt.savefig('tree.pdf')
+
+# Define features for Person A and Person B
+person_a = [25, 4, 6600, 70, 4.2, 38]  # Age, rc, wc, bp, pot, pcv
+person_b = [62, 5, 7200, 80, 2.5, 40]  # Age, rc, wc, bp, pot, pcv
+
+# Make predictions
+person_a_pred = model.predict([person_a])
+person_b_pred = model.predict([person_b])
+
+
+print("Person A - Predicted class (0: No, 1: Yes):", person_a_pred)
+print("Person B - Predicted class (0: No, 1: Yes):", person_b_pred)
